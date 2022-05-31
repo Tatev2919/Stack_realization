@@ -10,39 +10,46 @@ class Deque{
         Deque () {
             a = new int[size];
         }
-        int getSiz(){
-            return size;
-        }
-        void pushBack(int x){
-            if(isBackfull()==true){
+        
+	~Deque () {
+	   delete [] a;
+	}
+
+	void pushBack(int x){
+            if(isFull()){
                 cout<<"stack is full 1st : "<< indLast << endl;
                 allocateMem();
-            } else {
+            } else if(isBackfull()) {
+	    	cout <<"is Back full" << endl;
+	    } else {
             	a[indLast++]=x;
 	    }
         }
+
         void pushFirst(int x){
-            if(isFrontfull()==true){
+            if(isFull()){
                 cout<<"stack is full"<<endl;
                 allocateMem();
-            }
-            a[indFirst--]=x;
+            } else if (isFrontfull()) {
+	    	cout<<"Is Front full" <<endl;
+	    } else {
+            	a[indFirst--]=x;
+	    }
         }
-	
         int popBack(){
-            //if(isEmpty()){
-             //   return -1;
-            //}
+            if(isEmpty()){
+                return -1;
+            }
             indLast--;
             indCheck();
             return a[indLast];
         }
         int popFirst(){
-            //if(isEmpty()){
-            //    return -1;
-            //}
+            if(isEmpty()){
+                return -1;
+            }
             indFirst++;
-	    //indCheck();
+	    indCheck();
             return a[indFirst];
         }
         void print(){
@@ -54,15 +61,18 @@ class Deque{
         bool isEmpty(){
             return (indLast==5 && indFirst==5);
         }
+	    bool isFull(){
+            return (indLast==size && indFirst==0);
+	    }
+
         bool isFrontfull(){
             return (indFirst==0);
         }
+
         bool isBackfull(){
-	    if (indLast==size) {
-	    	return true;
-	    }
-            return false;
+	    return (indLast== size);	
         }
+
         void indCheck(){
             if (indLast == indFirst ){
                 cout << "indexes are equal"<<endl;
@@ -70,28 +80,26 @@ class Deque{
                 indFirst = 5;
             }
         }
-       void allocateMem() {
+        
+        void allocateMem() {
             int* p = a;
             a = new int[size*2];
             for (int i = 0; i < size; i++){
                 a[i+2] = p[i];
             }
-            delete [] p;
-            indFirst= indFirst+2;
-            indLast = indLast+2;
-            size= size*2;
-            cout << "After allocation" <<endl;
-            print();
+	    delete [] p;
+	    indFirst= indFirst+2;
+	    indLast = indLast+2;
+	    size= size*2;
+	    cout << "After allocation" <<endl;
         }
-
 };
 int main () {
     Deque s;
-    //cout << s.isEmpty() << endl;
     for (int i = 0; i < 8; i++) {
         s.pushBack(i);
         s.print();
-        //s.pushFirst(i);
+        s.pushFirst(i);
     }
     cout<< "print1" << endl;
     s.print();

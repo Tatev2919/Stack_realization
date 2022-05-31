@@ -28,6 +28,7 @@ class Deque{
             }
             a[indFirst--]=x;
         }
+	
         int popBack(){
             //if(isEmpty()){
              //   return -1;
@@ -69,21 +70,20 @@ class Deque{
                 indFirst = 5;
             }
         }
-        void allocateMem() {
+       void allocateMem() {
             int* p = a;
-            //a = new int[20];
-            //for (int i = 0; i < size; i++){
-            //    a[i+3] = p[i];
-            //}
-            //delete[] p;
-            //for(int i = 0; i < size*2; i++){
-            //    cout << a[i] << " ,";
-            //}
-            cout << "print" << endl;
-            //indFirst=indFirst+3;
-            //indLast=indLast+3;
-            //size = size*2;
+            a = new int[size*2];
+            for (int i = 0; i < size; i++){
+                a[i+2] = p[i];
+            }
+            delete [] p;
+            indFirst= indFirst+2;
+            indLast = indLast+2;
+            size= size*2;
+            cout << "After allocation" <<endl;
+            print();
         }
+
 };
 int main () {
     Deque s;
